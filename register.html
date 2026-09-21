@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Register - ReferKaro</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+  <div class="logo">
+    ReferKaro
+  </div>
+
+  <div>
+    <a href="index.html" class="login-btn">
+      Home
+    </a>
+  </div>
+
+</header>
+
+
+<main class="auth-container">
+
+  <div class="auth-card">
+
+    <h1>Create Account</h1>
+
+    <p class="auth-subtitle">
+      ReferKaro पर अपना account बनाएं
+    </p>
+
+
+    <form id="registerForm">
+
+      <label for="name">
+        Full Name
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        placeholder="अपना नाम"
+        required
+      >
+
+
+      <label for="email">
+        Email
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="example@email.com"
+        required
+      >
+
+
+      <label for="password">
+        Password
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="कम से कम 6 characters"
+        minlength="6"
+        required
+      >
+
+
+      <label for="referral">
+        Referral Code
+        <span>(Optional)</span>
+      </label>
+
+      <input
+        type="text"
+        id="referral"
+        placeholder="Referral code"
+      >
+
+
+      <button
+        type="submit"
+        class="auth-btn"
+      >
+        Create Account
+      </button>
+
+    </form>
+
+
+    <p class="auth-footer">
+
+      पहले से account है?
+
+      <a href="login.html">
+        Login करें
+      </a>
+
+    </p>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <p>
+    © 2026 ReferKaro
+  </p>
+
+  <p>
+    Independent referral platform.
+  </p>
+
+</footer>
+
+
+<script>
+
+  /*
+    Firebase अगले step में connect करेंगे.
+    अभी form submit होने पर demo message दिखेगा.
+  */
+
+  document
+    .getElementById("registerForm")
+    .addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      alert(
+        "Registration system अगले step में Firebase से connect होगा."
+      );
+
+    });
+
+</script>
+
+</body>
+</html>
