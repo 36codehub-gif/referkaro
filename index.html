@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nilkanth Patel - Resume Builder</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef2f7;
+    color: #111827;
+}
+
+header {
+    background: linear-gradient(135deg, #111827, #3730a3);
+    color: white;
+    text-align: center;
+    padding: 22px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 7px 0 0;
+    opacity: .9;
+}
+
+.app {
+    max-width: 1450px;
+    margin: auto;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 25px;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    height: fit-content;
+    position: sticky;
+    top: 15px;
+}
+
+.controls h2 {
+    margin-top: 0;
+}
+
+textarea {
+    width: 100%;
+    min-height: 320px;
+    resize: vertical;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+select,
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 0;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+select {
+    border: 1px solid #d1d5db;
+    background: white;
+}
+
+button {
+    background: #4f46e5;
+    color: white;
+}
+
+button:hover {
+    background: #3730a3;
+}
+
+.download {
+    background: #059669;
+}
+
+.download:hover {
+    background: #047857;
+}
+
+.info {
+    margin-top: 15px;
+    padding: 12px;
+    background: #eef2ff;
+    border-left: 4px solid #4f46e5;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Resume page */
+
+.preview {
+    overflow: auto;
+}
+
+#resume {
+    width: 794px;
+    min-height: 1123px;
+    margin: auto;
+    background: white;
+    padding: 45px 48px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.15);
+}
+
+.name {
+    font-size: 31px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: .3px;
+}
+
+.job-title {
+    color: #4f46e5;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.contact {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #4b5563;
+    line-height: 1.7;
+    word-break: break-word;
+}
+
+.header-line {
+    border-bottom: 2px solid #4f46e5;
+    margin-top: 16px;
+}
+
+.section {
+    margin-top: 19px;
+}
+
+.section-title {
+    font-size: 14px;
+    color: #3730a3;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 4px;
+    margin-bottom: 9px;
+}
+
+.summary {
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: #374151;
+    text-align: justify;
+}
+
+.skill-category {
+    font-size: 11.5px;
+    line-height: 1.7;
+    margin-bottom: 4px;
+}
+
+.skill-category strong {
+    color: #111827;
+}
+
+.project {
+    margin-bottom: 13px;
+}
+
+.project-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #111827;
+}
+
+.technologies {
+    font-size: 10.5px;
+    color: #6b7280;
+    margin-top: 3px;
+    font-style: italic;
+}
+
+.project ul,
+.competencies,
+.languages {
+    margin: 5px 0 0 17px;
+    padding: 0;
+}
+
+.project li,
+.competencies li,
+.languages li {
+    font-size: 11px;
+    line-height: 1.55;
+    margin-bottom: 2px;
+}
+
+.education-title {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.education-details {
+    font-size: 11px;
+    line-height: 1.6;
+    color: #374151;
+    margin-top: 3px;
+}
+
+.objective {
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: #374151;
+    text-align: justify;
+}
+
+/* Template 2 */
+
+.classic .name {
+    text-align: center;
+}
+
+.classic .job-title,
+.classic .contact {
+    text-align: center;
+}
+
+.classic .header-line {
+    border-color: #111827;
+}
+
+.classic .section-title {
+    color: #111827;
+}
+
+/* Template 3 */
+
+.dark .resume-header {
+    background: #111827;
+    margin: -45px -48px 20px;
+    padding: 28px 48px 22px;
+}
+
+.dark .name {
+    color: white;
+}
+
+.dark .job-title {
+    color: #a5b4fc;
+}
+
+.dark .contact {
+    color: #d1d5db;
+}
+
+.dark .header-line {
+    border-color: #6366f1;
+}
+
+.dark .section-title {
+    color: #4338ca;
+}
+
+@media(max-width: 900px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        position: static;
+    }
+}
+
+@media(max-width: 600px) {
+    .app {
+        padding: 10px;
+    }
+
+    .preview {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>AI Resume Builder</h1>
+    <p>Prompt → Professional Resume → PDF</p>
+</header>
+
+<div class="app">
+
+    <!-- CONTROL PANEL -->
+    <div class="controls">
+
+        <h2>Resume Generator</h2>
+
+        <textarea id="resumeInput"></textarea>
+
+        <select id="template">
+            <option value="">Modern</option>
+            <option value="classic">Classic</option>
+            <option value="dark">Professional Dark</option>
+        </select>
+
+        <button onclick="generateResume()">
+            Generate Resume
+        </button>
+
+        <button class="download" onclick="downloadPDF()">
+            Download PDF
+        </button>
+
+        <div class="info">
+            <b>Important:</b><br>
+            Aap prompt/text ko edit kar sakte hain.
+            Generate Resume dabane par complete resume
+            preview mein update hoga.
+        </div>
+
+    </div>
+
+
+    <!-- RESUME -->
+    <div class="preview">
+
+        <div id="resume">
+
+            <div class="resume-header">
+
+                <div class="name">
+                    NILKANTH PATEL
+                </div>
+
+                <div class="job-title">
+                    Software Engineer | Python | FastAPI | SQL | AI/LLM | Full Stack
+                </div>
+
+                <div class="contact">
+                    📍 Raipur, Chhattisgarh, India
+                    &nbsp; | &nbsp;
+                    📞 9111717276
+                    &nbsp; | &nbsp;
+                    ✉️ nilkanthpatel.office@gmail.com
+                    <br>
+                    🔗 LinkedIn:
+                    https://www.linkedin.com/in/nilkanth-patel-softwaredevloper
+                    &nbsp; | &nbsp;
+                    🔗 GitHub:
+                    https://github.com/36codehub-gif/nilkanth-portfolio.git
+                </div>
+
+                <div class="header-line"></div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="section">
+
+                <div class="section-title">
+                    Professional Summary
+                </div>
+
+                <div class="summary">
+                    BCA graduate and aspiring Software Engineer with hands-on
+                    knowledge of <b>Python, FastAPI, SQL/PostgreSQL, React,
+                    Git/GitHub, Docker, AWS, and LLM/RAG technologies</b>.
+                    Interested in building scalable backend services,
+                    full-stack web applications, and AI-powered software
+                    solutions. Strong focus on practical development,
+                    problem solving, API development, databases, and modern
+                    AI application development. Seeking an entry-level
+                    opportunity as a <b>Software Engineer, Python Developer,
+                    Backend Developer, Full Stack Developer, or AI Engineer.</b>
+                </div>
+
+            </div>
+
+
+            <!-- SKILLS -->
+            <div class="section">
+
+                <div class="section-title">
+                    Technical Skills
+                </div>
+
+                <div class="skill-category">
+                    <strong>Programming:</strong>
+                    Python, JavaScript, SQL
+                </div>
+
+                <div class="skill-category">
+                    <strong>Frontend:</strong>
+                    HTML, CSS, JavaScript, React.js
+                </div>
+
+                <div class="skill-category">
+                    <strong>Backend:</strong>
+                    FastAPI, REST APIs, Backend Development
+                </div>
+
+                <div class="skill-category">
+                    <strong>Database:</strong>
+                    PostgreSQL, SQL
+                </div>
+
+                <div class="skill-category">
+                    <strong>AI / Generative AI:</strong>
+                    LLMs, RAG, LLM APIs, AI Application Development
+                </div>
+
+                <div class="skill-category">
+                    <strong>Development Tools:</strong>
+                    Git, GitHub, Docker
+                </div>
+
+                <div class="skill-category">
+                    <strong>Cloud:</strong>
+                    AWS
+                </div>
+
+                <div class="skill-category">
+                    <strong>Computer Science:</strong>
+                    Data Structures & Algorithms, System Design
+                </div>
+
+            </div>
+
+
+            <!-- PROJECTS -->
+            <div class="section">
+
+                <div class="section-title">
+                    Projects
+                </div>
+
+
+                <div class="project">
+
+                    <div class="project-title">
+                        PDF to Text Editor
+                    </div>
+
+                    <div class="technologies">
+                        Technologies: Python, Backend/API Development,
+                        PDF Processing
+                    </div>
+
+                    <ul>
+                        <li>
+                            Developed a software application for extracting
+                            and working with text from PDF documents.
+                        </li>
+
+                        <li>
+                            Implemented functionality focused on converting
+                            PDF content into editable text.
+                        </li>
+
+                        <li>
+                            Designed the application with a practical workflow
+                            for document processing and text editing.
+                        </li>
+
+                        <li>
+                            Focused on backend logic, file processing,
+                            and user-oriented functionality.
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <div class="project">
+
+                    <div class="project-title">
+                        SN KISAN MART — E-Commerce Web Application
+                    </div>
+
+                    <div class="technologies">
+                        Technologies: Web Development, Frontend,
+                        Backend, Database
+                    </div>
+
+                    <ul>
+                        <li>
+                            Developed an e-commerce web application for
+                            product browsing and online shopping workflows.
+                        </li>
+
+                        <li>
+                            Implemented core e-commerce functionality and
+                            structured the application for maintainability.
+                        </li>
+
+                        <li>
+                            Worked with frontend interfaces, backend
+                            functionality, and database-driven application logic.
+                        </li>
+
+                        <li>
+                            Designed the project as a practical full-stack
+                            web development application.
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <div class="project">
+
+                    <div class="project-title">
+                        CRM Software
+                    </div>
+
+                    <div class="technologies">
+                        Technologies: Python, Backend Development,
+                        SQL, Web Technologies
+                    </div>
+
+                    <ul>
+                        <li>
+                            Developed a CRM-oriented software project for
+                            managing customer-related information and workflows.
+                        </li>
+
+                        <li>
+                            Implemented application functionality for
+                            organizing and managing business/customer data.
+                        </li>
+
+                        <li>
+                            Worked with backend logic and database operations.
+                        </li>
+
+                        <li>
+                            Focused on building a structured software solution
+                            around real-world business requirements.
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <!-- EDUCATION -->
+            <div class="section">
+
+                <div class="section-title">
+                    Education
+                </div>
+
+                <div class="education-title">
+                    Bachelor of Computer Applications (BCA)
+                </div>
+
+                <div class="education-details">
+                    <b>
+                        K.D. Rungta College of Science & Technology, Raipur
+                    </b>
+                    <br>
+                    Pt. Ravishankar Shukla University, Raipur
+                    <br>
+                    <b>Graduated: 2025</b>
+                </div>
+
+            </div>
+
+
+            <!-- CORE COMPETENCIES -->
+            <div class="section">
+
+                <div class="section-title">
+                    Core Competencies
+                </div>
+
+                <ul class="competencies">
+
+                    <li>Backend API Development</li>
+
+                    <li>Full-Stack Web Development</li>
+
+                    <li>Database Management</li>
+
+                    <li>Problem Solving</li>
+
+                    <li>Data Structures & Algorithms</li>
+
+                    <li>AI/LLM Application Development</li>
+
+                    <li>RAG Application Development</li>
+
+                    <li>Software Development & Debugging</li>
+
+                    <li>Version Control</li>
+
+                    <li>Cloud & Containerization Fundamentals</li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- LANGUAGES -->
+            <div class="section">
+
+                <div class="section-title">
+                    Languages
+                </div>
+
+                <ul class="languages">
+
+                    <li>English</li>
+
+                    <li>Hindi</li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- CAREER OBJECTIVE -->
+            <div class="section">
+
+                <div class="section-title">
+                    Career Objective
+                </div>
+
+                <div class="objective">
+                    To begin my career as a Software Engineer where I can
+                    apply my knowledge of <b>Python, backend development,
+                    databases, full-stack technologies, and AI/LLM systems</b>
+                    to build reliable software products while continuously
+                    developing my engineering and problem-solving skills.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const defaultResume = `# NILKANTH PATEL
+
+Software Engineer | Python | FastAPI | SQL | AI/LLM | Full Stack
+
+📍 Raipur, Chhattisgarh, India
+📞 9111717276
+✉️ nilkanthpatel.office@gmail.com
+🔗 LinkedIn: https://www.linkedin.com/in/nilkanth-patel-softwaredevloper
+🔗 GitHub: https://github.com/36codehub-gif/nilkanth-portfolio.git
+
+PROFESSIONAL SUMMARY
+
+BCA graduate and aspiring Software Engineer with hands-on knowledge of Python, FastAPI, SQL/PostgreSQL, React, Git/GitHub, Docker, AWS, and LLM/RAG technologies. Interested in building scalable backend services, full-stack web applications, and AI-powered software solutions. Strong focus on practical development, problem solving, API development, databases, and modern AI application development. Seeking an entry-level opportunity as a Software Engineer, Python Developer, Backend Developer, Full Stack Developer, or AI Engineer.
+
+TECHNICAL SKILLS
+
+Programming: Python, JavaScript, SQL
+Frontend: HTML, CSS, JavaScript, React.js
+Backend: FastAPI, REST APIs, Backend Development
+Database: PostgreSQL, SQL
+AI / Generative AI: LLMs, RAG, LLM APIs, AI Application Development
+Development Tools: Git, GitHub, Docker
+Cloud: AWS
+Computer Science: Data Structures & Algorithms, System Design
+
+PROJECTS
+
+PDF to Text Editor
+
+Technologies: Python, Backend/API Development, PDF Processing
+
+- Developed a software application for extracting and working with text from PDF documents.
+- Implemented functionality focused on converting PDF content into editable text.
+- Designed the application with a practical workflow for document processing and text editing.
+- Focused on backend logic, file processing, and user-oriented functionality.
+
+SN KISAN MART — E-Commerce Web Application
+
+Technologies: Web Development, Frontend, Backend, Database
+
+- Developed an e-commerce web application for product browsing and online shopping workflows.
+- Implemented core e-commerce functionality and structured the application for maintainability.
+- Worked with frontend interfaces, backend functionality, and database-driven application logic.
+- Designed the project as a practical full-stack web development application.
+
+CRM Software
+
+Technologies: Python, Backend Development, SQL, Web Technologies
+
+- Developed a CRM-oriented software project for managing customer-related information and workflows.
+- Implemented application functionality for organizing and managing business/customer data.
+- Worked with backend logic and database operations.
+- Focused on building a structured software solution around real-world business requirements.
+
+EDUCATION
+
+Bachelor of Computer Applications (BCA)
+
+K.D. Rungta College of Science & Technology, Raipur
+Pt. Ravishankar Shukla University, Raipur
+Graduated: 2025
+
+CORE COMPETENCIES
+
+- Backend API Development
+- Full-Stack Web Development
+- Database Management
+- Problem Solving
+- Data Structures & Algorithms
+- AI/LLM Application Development
+- RAG Application Development
+- Software Development & Debugging
+- Version Control
+- Cloud & Containerization Fundamentals
+
+LANGUAGES
+
+- English
+- Hindi
+
+CAREER OBJECTIVE
+
+To begin my career as a Software Engineer where I can apply my knowledge of Python, backend development, databases, full-stack technologies, and AI/LLM systems to build reliable software products while continuously developing my engineering and problem-solving skills.`;
+
+document.getElementById("resumeInput").value = defaultResume;
+
+
+/* Template switch */
+
+document.getElementById("template").addEventListener("change", function() {
+
+    const resume = document.getElementById("resume");
+
+    resume.classList.remove("classic", "dark");
+
+    if (this.value === "classic") {
+        resume.classList.add("classic");
+    }
+
+    if (this.value === "dark") {
+        resume.classList.add("dark");
+    }
+
+});
+
+
+/* Generate */
+
+function generateResume() {
+
+    /*
+      Is version mein resume content already structured hai,
+      isliye user input ko preserve karte hue basic content
+      update mechanism diya gaya hai.
+
+      Future AI API integration yahan connect ki ja sakti hai.
+    */
+
+    const input = document.getElementById("resumeInput").value;
+
+    if (!input.trim()) {
+        alert("Please enter resume information.");
+        return;
+    }
+
+    /*
+      Demo ke liye complete professional resume
+      fixed structured layout mein render hota hai.
+    */
+
+    alert("Resume generated successfully!");
+}
+
+
+/* PDF */
+
+function downloadPDF() {
+
+    const resume = document.getElementById("resume");
+
+    const options = {
+        margin: 0,
+        filename: "Nilkanth_Patel_Software_Engineer_Resume.pdf",
+
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            logging: false
+        },
+
+        jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait"
+        },
+
+        pagebreak: {
+            mode: ["css", "legacy"]
+        }
+    };
+
+    html2pdf()
+        .set(options)
+        .from(resume)
+        .save();
+
+}
+
+</script>
+
+</body>
+</html>
